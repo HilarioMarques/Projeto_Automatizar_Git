@@ -4,9 +4,9 @@ PASTA_REPOSITORIO="$HOME/pastaTeste_automatizarGit"
 MENSAGEM_COMMIT="commit automático"
 BRANCH="main"
 
-INTERVALO_COMMIT = 600 #10 minutos em s
-ULTIMO_COMMIT = 0
-HOUVE_ALTERACAO = false
+INTERVALO_COMMIT=30 #10 minutos em s
+ULTIMO_COMMIT=0
+HOUVE_ALTERACAO=false
 
 cd "$PASTA_REPOSITORIO" || exit 1
 
@@ -21,12 +21,12 @@ inotifywait -m -r \
   "$PASTA_REPOSITORIO" |
 while read -r caminho evento arquivo; do
     echo "Alteração detectada: $evento em $arquivo"
-    HOUVE_ALTERACAO = true
+    HOUVE_ALTERACAO=true
 
     AGORA=$(date +%s)
     DIFERENCA=$((AGORA - ULTIMO_COMMIT))
 
-    if ["$HOUVE_ALTERACAO" = true] && ["$DIFERENCA" -ge "$INTERVALO_COMMIT"]; then
+    if [ "$HOUVE_ALTERACAO" = true ] && [ "$DIFERENCA" -ge "$INTERVALO_COMMIT" ]; then
         echo "Intervalo atingido. Commitando"
 
         git add .
