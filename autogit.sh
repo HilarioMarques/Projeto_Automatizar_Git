@@ -6,6 +6,26 @@ BRANCH="main"
 
 INTERVALO_COMMIT=300 #5 minutos em s
 FLAG_ARQUIVO="/tmp/autogit_flag"
+LOCK_FILE="/tmp/autogit.lock"
+
+# -- LOCK --
+if [ -f "$LOCK_FILE" ]; then
+    echo "AutoGit já está rodando!"
+    exit 1
+fi
+
+echo $$ > "$LOCK_FILE"
+
+# ---- CLEANUP ----
+cleanup() {
+    echo "Encerrando AutoGit..."
+    rm -f "$FLAG_ARQUIVO"
+    rm -f "$LOCK_FILE"
+    pkill -P $$ 2>/dev/null
+    exit 0
+}
+
+trap cleanup SIGINT SIGTERM EXIT
 
 
 cd "$PASTA_REPOSITORIO" || exit 1
