@@ -4,15 +4,14 @@ PASTA_REPOSITORIO="$HOME/pastaTeste_automatizarGit"
 MENSAGEM_COMMIT="commit automático"
 BRANCH="main"
 
-INTERVALO_COMMIT=30 #10 minutos em s
-HOUVE_ALTERACAO=false
+INTERVALO_COMMIT=300 #5 minutos em s
 FLAG_ARQUIVO="/tmp/autogit_flag"
 
 
 cd "$PASTA_REPOSITORIO" || exit 1
 
 echo "Monitorando alterações em $PASTA_REPOSITORIO ..."
-echo "Commits automáticos a cada 10 minutos, se houver mudanças"
+echo "Commits automáticos a cada 5 minutos, se houver mudanças"
 
 rm -f "$FLAG_ARQUIVO"
 
